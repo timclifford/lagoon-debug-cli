@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes_from:
+      - container:amazeeio-ssh-agent
+    environment:
+      # SSH_AUTH_SOCK: /tmp/amazeeio_ssh-agent/socket # temp
+      TEMP_FOLDER: ./tmp/
+      COMPOSER_MEMORY_LIMIT: -1
+      COMPOSER_ALLOW_XDEBUG: 1
+      LAGOON_GIT_SHA: ${LAGOON_GIT_SHA:-}
+      LAGOON_ENDPOINT: ${LAGOON_ENDPOINT:-https://api-lagoon-master.lagoon.ch.amazee.io/graphql}
+    # entrypoint: sh -c "./entrypoint.sh"
