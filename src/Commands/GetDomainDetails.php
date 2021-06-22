@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Api\LagoonApi;
 use App\Domain\DomainDetails;
 use Clockwork\Support\Vanilla\Clockwork;
 use Symfony\Component\Console\Command\Command;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class GetDomainDetails extends Command {
 
     private array $projects = [];
+    private $lagoonProject;
 
     protected function configure() {
         $this

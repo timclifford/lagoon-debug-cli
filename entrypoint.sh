@@ -3,18 +3,22 @@
 set -e
 
 #args
-# domain=''
+domain=''
+config=''
+push='false'
 verbose='false'
 
-while getopts ':v' flag
+while getopts 'pf:v' flag
 do
     case "${flag}" in
-       # d) domain="${OPTARG}" ;;
+       d|--domain)="${OPTARG}" ;;
+       p|--push)='true' ;;
+       f) config="${OPTARG}" ;;
        v) verbose='true' ;;
     esac
 done
 
-# envs
+# default envs
 export TEMP_FOLDER=./tmp/
 export GITLAB_TOKEN=token
 export ELASTICSEARCH_ENDPOINT=localhost

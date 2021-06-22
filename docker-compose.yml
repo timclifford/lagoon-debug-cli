@@ -5,10 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - .:/app
     volumes_from:
       - container:amazeeio-ssh-agent
     environment:
-      # SSH_AUTH_SOCK: /tmp/amazeeio_ssh-agent/socket # temp
+      SSH_AUTH_SOCK: /tmp/amazeeio_ssh-agent/socket # temp
       TEMP_FOLDER: ./tmp/
       COMPOSER_MEMORY_LIMIT: -1
       COMPOSER_ALLOW_XDEBUG: 1

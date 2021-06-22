@@ -11,16 +11,14 @@ RUN install-php-extensions intl
 RUN rm -f /usr/local/etc/php/conf.d/yaml.ini
 
 COPY composer.json composer.lock /app/
-RUN COMPOSER_ALLOW_XDEBUG=1 composer install --prefer-dist --no-dev --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
+RUN COMPOSER_MEMORY_LIMIT=-1 COMPOSER_ALLOW_XDEBUG=1 composer install --prefer-dist --no-dev --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
 COPY . /app
 ADD ./tmp/ /tmp/
-
-ENV TEMP_FOLDER=./tmp/
 
 ADD entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 #Temp: keep container running for debugging
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
 
-CMD ["/entrypoint.sh"]
+#CMD ["/entrypoint.sh"]

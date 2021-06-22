@@ -21,6 +21,7 @@ class DomainDetails {
   protected bool $isOps = FALSE;
   protected bool $hasEdge = FALSE;
   protected bool $hasSsl = TRUE;
+  protected bool $isLagoon = FALSE;
 
   protected array $cache = [];
   protected array $variables = [];
@@ -45,7 +46,7 @@ class DomainDetails {
       'allow_redirects' => FALSE,
       'http_errors' => FALSE,
       'headers' => [
-        'User-Agent' => 'govcms-debug/1.0',
+        'User-Agent' => 'debug/1.0',
         'Accept' => 'text/html',
         'Fastly-Debug' => '1',
       ],
@@ -98,8 +99,12 @@ class DomainDetails {
       $plugin->setRegistrableDomain($registrableDomain);
       $clockwork->event("Plugin {$plugin->getMachineName()}")->begin();
       $this->variables[$plugin->getMachineName()] = $plugin->analyseData();
+      if ($plugin->getMachineName() === "backend") {
+          $this->isLagoon = $this->variables[$plugin->getMachineName()]['isLagoon'];
+      }
       $clockwork->event("Plugin {$plugin->getMachineName()}")->end();
     }
+
   }
 
   /**
@@ -124,6 +129,10 @@ class DomainDetails {
       }
     }
     return $plugins;
+  }
+
+  public function isLagoon(): bool {
+    return $this->isLagoon;
   }
 
   /**

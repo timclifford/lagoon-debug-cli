@@ -34,7 +34,7 @@ class LagoonApi {
       'connect_timeout' => 4,
       'allow_redirects' => FALSE,
       'headers' => [
-        'User-Agent' => 'govcms-debug/1.0',
+        'User-Agent' => 'debug/1.0',
         'Accept' => 'application/json',
         'Authorization' => 'bearer ' . getenv('LAGOON_TOKEN'),
       ],
@@ -88,6 +88,35 @@ class LagoonApi {
 
     $response = $this->graphqlQuery($query);
     return $response['data']['updateProjectMetadata'];
+  }
+
+  /**
+    * Add key/value pair facts into environments.
+    *
+    * @param $projectId
+    * @param $environmentName
+    * @param $facts
+    *
+    * @return mixed
+    * @throws \GuzzleHttp\Exception\GuzzleException
+  */
+  public function addFacts($projectId, $environmentName, $facts) {
+
+      var_dump($projectId);
+      var_dump($environmentName);
+
+      exit(1);
+
+    $query = <<<GRAPHQL
+    mutation addFactsMutation($facts: AddFactsInput!) {
+      addFacts(input: $facts) {
+        id
+      }
+    }
+    GRAPHQL;
+
+    $response = $this->graphqlQuery($query);
+    return $response['data'];
   }
 
   /**

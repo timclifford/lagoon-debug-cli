@@ -17,6 +17,7 @@ Abstract class BasePlugin {
   protected ?array $ipv6Records = NULL;
   protected string $registrableDomain = '';
   protected array $cache = [];
+  protected bool $isLagoon = FALSE;
 
   /**
    * BasePlugin constructor.
